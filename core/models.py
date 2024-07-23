@@ -39,7 +39,7 @@ class SessionYear(models.Model):
 
 
 class Student(models.Model):
-    admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE,null=True, blank=True)
     address = models.TextField()
     gender = models.CharField(max_length=100)
     course_id = models.ForeignKey(Course, on_delete=models.DO_NOTHING)
@@ -52,7 +52,7 @@ class Student(models.Model):
 
 
 class Staff(models.Model):
-    admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE,null=True, blank=True)
     address = models.TextField()
     gender = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)

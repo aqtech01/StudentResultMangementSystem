@@ -5,11 +5,11 @@
   <div class="col-sm-12">
     <div class="card">
       <div class="card-body">
-        <form method="POST" action="{% url 'add_students' %}" enctype="multipart/form-data">
+        <form method="POST" action="{% url 'add_staff' %}" enctype="multipart/form-data">
           {% csrf_token %}
           <div class="row">
             <div class="col-12">
-              <h5 class="form-title"><span>Add Student</span></h5>
+              <h5 class="form-title"><span>Profile Update</span></h5>
             {% include "includes/messages.html" %}
             </div>
             <div class="col-12 col-sm-6">
@@ -50,7 +50,7 @@
             </div>
             <div class="col-12 col-sm-6">
               <div class="form-group">
-                <label>Present Address</label>
+                <label>Address</label>
                 <textarea class="form-control" name="address" required></textarea>
               </div>
             </div>
@@ -66,30 +66,9 @@
                 </select>
               </div>
             </div>
-            <div class="col-12 col-sm-6">
-              <div class="form-group">
-                <label>Session Year</label>
-                <select class="form-control" name="session_year_id" required>
-                  <option>Select Session Year</option>
-                  {% for session in sessions %}
-                    <option value="{{ session.id }}">{{ session.session_start }} to {{ session.session_end }}</option>
-                  {% endfor %}
-                </select>
-              </div>
-            </div>
-            <div class="col-12 col-sm-6">
-              <div class="form-group">
-                <label>Course</label>
-                <select class="form-control" name="course_id" required>
-                  <option>Select Course</option>
-                  {% for course in courses %}
-                    <option value="{{ course.id }}">{{ course.name }}</option>
-                  {% endfor %}
-                </select>
-              </div>
-            </div>
+
             <div class="col-12">
-              <button type="submit" class="btn btn-primary">Add Student</button>
+              <button type="submit" class="btn btn-primary">Add Staff</button>
             </div>
           </div>
         </form>

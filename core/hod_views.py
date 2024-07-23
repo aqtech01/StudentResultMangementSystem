@@ -1,8 +1,9 @@
 from django.contrib import messages
+from django.db import transaction
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from core.models import Course, SessionYear, CustomUser, Student
+from core.models import Course, SessionYear, CustomUser, Student, Staff
 
 
 @login_required(login_url="/")
@@ -188,9 +189,126 @@ def edit_course(request, id):
     return render(request, "hod/edit_course.html", context)
 
 
-
 def delete_course(request, id):
     course = get_object_or_404(Course, id=id)
     course.delete()
     messages.success(request, "Course successfully deleted!")
     return redirect("view_course")  # Redirect to a list of courses or another relevant page
+
+
+# Staff Views
+
+def add_staff(request):
+    if request.method == "POST":
+        profile_pic = request.FILES.get("profile_pic")
+        first_name = request.POST.get("first_name")
+        last_name = request.POST.get("last_name")
+        email = request.POST.get("email")
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        address = request.POST.get("address")
+        gender = request.POST.get("gender")
+
+        # print(profile_pic,first_name,last_name,email,username,password,address,gender,course_id,session_year_id)
+        if CustomUser.objects.filter(email=email).exists():
+            messages.error(request, "Email already is taken")
+            return redirect("add_students")
+        if CustomUser.objects.filter(username=username).exists():
+            messages.error(request, "Username already is taken")
+            return redirect("add_students")
+        else:
+            user = CustomUser(
+                first_name=first_name,
+                last_name=last_name,
+                username=username,
+                email=email,
+                profile_pic=profile_pic,
+                user_type=2,
+
+            )
+            user.set_password(password)
+            user.save()
+            #
+            staff = Staff(
+                admin=user,
+                address=address,
+                gender=gender
+
+            )
+            staff.save()
+            messages.success(request, "Staff successfully created")
+            return redirect("add_staff")
+
+    context = {
+        'title': 'Add Students',
+    }
+
+    return render(request, "hod/add_staff.html", context)
+
+
+def view_staff(request):
+    staff = Staff.objects.all()
+    context = {
+        "staff": staff,
+        "title": "View Staff"
+    }
+    return render(request, "hod/view_staff.html", context)
+
+
+def edit_staff(request, id):
+    staff = get_object_or_404(Staff, id=id)
+
+    if request.method == "POST":
+        # Fetch and update staff details
+        first_name = request.POST.get("first_name")
+        last_name = request.POST.get("last_name")
+        email = request.POST.get("email")
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        profile_pic = request.FILES.get("profile_pic")
+        address = request.POST.get("address")
+        gender = request.POST.get("gender")
+
+        # Update CustomUser fields
+        user = staff.admin
+        user.first_name = first_name
+        user.last_name = last_name
+        user.email = email
+        user.username = username
+        if profile_pic:
+            user.profile_pic = profile_pic
+        if password:
+            user.set_password(password)
+        user.save()
+
+        # Update Staff fields
+        staff.address = address
+        staff.gender = gender
+        staff.save()
+
+        messages.success(request, "Staff was successfully updated!")
+        return redirect("view_staff", id=id)
+
+    context = {
+        "staff": staff,
+    }
+    return render(request, "hod/edit_staff.html", context)
+
+
+def delete_staff(request, id):
+    staff = get_object_or_404(Staff, id=id)
+
+
+    # Example: Handle related records before deletion
+    # Update or delete related records here
+    # e.g., related_model.objects.filter(staff=staff).delete()
+
+    try:
+         # This will delete the associated CustomUser as well
+        staff.delete()
+        messages.success(request, "Staff was successfully deleted!")
+    except IntegrityError:
+        transaction.rollback()
+        messages.error(request, "Cannot delete staff due to related records.")
+
+    return redirect("staff_list")
