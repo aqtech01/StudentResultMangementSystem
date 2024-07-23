@@ -32,4 +32,10 @@ urlpatterns = [
     path('delete_staff/<int:id>/', delete_course, name='delete_staff'),
 
 
+    # Subjects
+    path("hod/add/subject/", add_subject, name="add_subject"),
+    path('hod/view_subject/', view_subject, name='view_subject'),
+    path('edit_subject/<int:id>/', edit_subject, name='edit_subject'),
+    path('delete_subject/<int:id>/', delete_subject, name='delete_subject'),
+
 ]

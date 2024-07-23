@@ -3,7 +3,7 @@ from django.db import transaction
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from core.models import Course, SessionYear, CustomUser, Student, Staff
+from core.models import Course, SessionYear, CustomUser, Student, Staff, Subject
 
 
 @login_required(login_url="/")
@@ -312,3 +312,80 @@ def delete_staff(request, id):
         messages.error(request, "Cannot delete staff due to related records.")
 
     return redirect("staff_list")
+
+
+
+
+def add_subject(request):
+    courses = Course.objects.all()
+    staff = Staff.objects.all()
+
+    if request.method == "POST":
+        name = request.POST.get("name")
+        course_id = request.POST.get("course_id")
+        staff_id = request.POST.get("staff_id")
+        course = Course.objects.get(id=course_id)
+        staff = Staff.objects.get(id=staff_id)
+        subject= Subject(
+            name= name,
+            course = course,
+            staff= staff,
+        )
+        subject.save()
+        messages.success(request, "Subjects are Successfully added")
+        return redirect("view_subject")
+
+
+    context = {
+        "courses": courses,
+        "staff" : staff,
+        "title": "Add Subject",
+    }
+    return  render(request, "hod/add_subject.html", context)
+
+
+def view_subject(request):
+    subjects = Subject.objects.all()
+    context = {
+        "subjects": subjects,
+        "title": "View Subjects",
+    }
+    return render(request, "hod/view_subject.html",context)
+
+
+def edit_subject(request, id):
+    subject = get_object_or_404(Subject, id=id)
+    courses = Course.objects.all()
+    staff = Staff.objects.all()
+
+    if request.method == "POST":
+        name = request.POST.get("name")
+        course_id = request.POST.get("course_id")
+        staff_id = request.POST.get("staff_id")
+
+        course = Course.objects.get(id=course_id)
+        staff_member = Staff.objects.get(id=staff_id)
+
+        subject.name = name
+        subject.course = course
+        subject.staff = staff_member
+        subject.save()
+
+        messages.success(request, "Subject updated successfully!")
+        return redirect("view_subject")  # Assuming you have a view to list subjects
+
+    context = {
+        "subject": subject,
+        "courses": courses,
+        "staff": staff,
+        "title": "Edit Subject",
+    }
+    return render(request, "hod/edit_subject.html", context)
+
+
+def delete_subject(request, id):
+    subject = get_object_or_404(Subject, id=id)
+     # This will delete the associated CustomUser as well
+    subject.delete()
+    messages.success(request, "Staff was successfully deleted!")
+    return redirect("view_subject")

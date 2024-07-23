@@ -60,3 +60,13 @@ class Staff(models.Model):
     def __str__(self):
         return f"{self.admin.first_name} - {self.admin.last_name} "
 
+
+class Subject(models.Model):
+    name = models.CharField(max_length=150)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE,null=True, blank=True)
+    staff = models.ForeignKey(Staff,on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name

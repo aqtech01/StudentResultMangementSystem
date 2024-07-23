@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div class="row">
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-body">
+        <form method="POST" action="{% url 'edit_subject' subject.id %}">
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-12">
+              <h5 class="form-title"><span>Edit Subject</span></h5>
+              {% include "includes/messages.html" %}
+            </div>
+            <div class="col-12 col-sm-6">
+              <div class="form-group">
+                <label>Name</label>
+                <input type="text" class="form-control" name="name" value="{{ subject.name }}" />
+              </div>
+            </div>
+            <div class="col-12 col-sm-6">
+              <div class="form-group">
+                <label>Course</label>
+                <select class="form-control" name="course_id">
+                  {% for course in courses %}
+                  <option value="{{ course.id }}" {% if course.id == subject.course.id %}selected{% endif %}>{{ course.name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6">
+              <div class="form-group">
+                <label>Staff</label>
+                <select class="form-control" name="staff_id">
+                  {% for staf in staff %}
+                  <option value="{{ staf.id }}" {% if staf.id == subject.staff.id %}selected{% endif %}>{{ staf.admin.first_name }} {{ staf.admin.last_name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary">Update Subject</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock main %}
