@@ -1,4 +1,5 @@
 {% load static %}
+{% load active_link_tags %}
 <div class="sidebar" id="sidebar">
             <div class="sidebar-inner slimscroll">
                <div id="sidebar-menu" class="sidebar-menu">
@@ -7,7 +8,7 @@
                         <span>Main Menu</span>
                      </li>
                      <li >
-                        <a href="#"><i class="fas fa-tachometer-alt"></i><span> Dashboard</span> </a>
+                        <a href="{% url 'hod_home' %}"><i class="fas fa-tachometer-alt"></i><span> Dashboard</span> </a>
 
                      </li>
                      <li class="submenu">
@@ -48,15 +49,23 @@
                      <li class="submenu">
                         <a href="#"><i class="fas fa-clock"></i> <span> Session</span> <span class="menu-arrow"></span></a>
                         <ul>
-                           <li><a href="subjects.html">Session View</a></li>
-                           <li><a href="add-subject.html">Session Add</a></li>
-                           <li><a href="edit-subject.html">Session Edit</a></li>
+                           <li><a href="{% url 'view_session_year' %}">Session View</a></li>
+                            <li><a href="{% url 'add_session_year' %}">Session Add</a></li>
                         </ul>
                      </li>
  <li>
                         <a href="#"><i class="fas fa-clipboard-list"></i> <span> Attendence</span> </a>
 
                      </li>
+                       <li>
+                        <a href="#"><i class="fas fa-comments"></i><span>Send Staff Notification</span> </a>
+
+                     </li>
+                       <li>
+                        <a href="#"><i class="fas fa-comments"></i><span>Send Student Notification</span> </a>
+
+                     </li>
+
                      <li>
                         <a href="#"><i class="fas fa-comments"></i><span> Staff Feedback</span> </a>
 

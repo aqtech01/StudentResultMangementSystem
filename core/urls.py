@@ -38,4 +38,10 @@ urlpatterns = [
     path('edit_subject/<int:id>/', edit_subject, name='edit_subject'),
     path('delete_subject/<int:id>/', delete_subject, name='delete_subject'),
 
+    # Session URLS
+    path('hod/add/', add_session_year, name='add_session_year'),
+    path('hod/view/', view_session_year, name='view_session_year'),
+    path('hod/update/<int:id>/', update_session_year, name='update_session_year'),
+    path('hod/delete/<int:id>/', delete_session_year, name='delete_session_year'),
+
 ]

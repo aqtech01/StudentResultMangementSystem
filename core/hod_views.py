@@ -8,7 +8,25 @@ from core.models import Course, SessionYear, CustomUser, Student, Staff, Subject
 
 @login_required(login_url="/")
 def hod_home(request):
-    return render(request, "hod/home.html")
+    student_count = Student.objects.all().count()
+    staff_count = Staff.objects.all().count()
+    course_count = Course.objects.all().count()
+    subject_count = Subject.objects.all().count()
+    student_gender_male = Student.objects.filter(gender="Male").count()
+    student_gender_female = Student.objects.filter(gender="Female").count()
+
+
+    context = {
+        "student_count" : student_count,
+        "staff_count" : staff_count,
+        "course_count" :course_count,
+        "subject_count" : subject_count,
+        "student_gender_male" : student_gender_male,
+        "student_gender_female": student_gender_female,
+        "title":"Home",
+
+    }
+    return render(request, "hod/home.html",context)
 
 
 @login_required(login_url="/")
@@ -298,13 +316,12 @@ def edit_staff(request, id):
 def delete_staff(request, id):
     staff = get_object_or_404(Staff, id=id)
 
-
     # Example: Handle related records before deletion
     # Update or delete related records here
     # e.g., related_model.objects.filter(staff=staff).delete()
 
     try:
-         # This will delete the associated CustomUser as well
+        # This will delete the associated CustomUser as well
         staff.delete()
         messages.success(request, "Staff was successfully deleted!")
     except IntegrityError:
@@ -312,8 +329,6 @@ def delete_staff(request, id):
         messages.error(request, "Cannot delete staff due to related records.")
 
     return redirect("staff_list")
-
-
 
 
 def add_subject(request):
@@ -326,22 +341,21 @@ def add_subject(request):
         staff_id = request.POST.get("staff_id")
         course = Course.objects.get(id=course_id)
         staff = Staff.objects.get(id=staff_id)
-        subject= Subject(
-            name= name,
-            course = course,
-            staff= staff,
+        subject = Subject(
+            name=name,
+            course=course,
+            staff=staff,
         )
         subject.save()
         messages.success(request, "Subjects are Successfully added")
         return redirect("view_subject")
 
-
     context = {
         "courses": courses,
-        "staff" : staff,
+        "staff": staff,
         "title": "Add Subject",
     }
-    return  render(request, "hod/add_subject.html", context)
+    return render(request, "hod/add_subject.html", context)
 
 
 def view_subject(request):
@@ -350,7 +364,7 @@ def view_subject(request):
         "subjects": subjects,
         "title": "View Subjects",
     }
-    return render(request, "hod/view_subject.html",context)
+    return render(request, "hod/view_subject.html", context)
 
 
 def edit_subject(request, id):
@@ -385,7 +399,66 @@ def edit_subject(request, id):
 
 def delete_subject(request, id):
     subject = get_object_or_404(Subject, id=id)
-     # This will delete the associated CustomUser as well
+    # This will delete the associated CustomUser as well
     subject.delete()
     messages.success(request, "Staff was successfully deleted!")
     return redirect("view_subject")
+
+
+# Add function
+def add_session_year(request):
+    if request.method == 'POST':
+        session_start = request.POST.get('session_start')
+        session_end = request.POST.get('session_end')
+        if session_start and session_end:
+            new_session = SessionYear(session_start=session_start, session_end=session_end)
+            new_session.save()
+            messages.success(request, "Session Created Successfully")
+
+            return redirect('view_session_year')
+        else:
+            messages.error(request, "something wrong")
+
+    return render(request, 'hod/add_session.html')
+
+
+# View function
+def view_session_year(request):
+    sessions = SessionYear.objects.all()
+    context = {
+        "sessions": sessions,
+        "title": "Session Year",
+    }
+    return render(request, "hod/view_session.html", context)
+
+
+# Update function
+def update_session_year(request, id):
+    sessions = get_object_or_404(SessionYear, id=id)
+
+    if request.method == "POST":
+        session_start = request.POST.get('session_start')
+        session_end = request.POST.get('session_end')
+        # Check for duplicate name (excluding the current course)
+
+        sessions.session_start = session_start
+        sessions.session_end = session_end
+        sessions.save()  # Save the updated course object to the database
+        messages.success(request, "Course successfully updated!")
+        return redirect("view_session_year")  # Redirect back to the edit page after successful update
+
+    context = {
+        "sessions": sessions,
+        "title": "Edit Session Year",
+    }
+    return render(request, "hod/edit_session.html", context)
+
+
+# Delete function
+def delete_session_year(request, id):
+    session = get_object_or_404(SessionYear, id=id)
+    # This will delete the associated CustomUser as well
+    session.delete()
+    messages.success(request, "Staff was successfully deleted!")
+    return redirect("view_session_year")
+
