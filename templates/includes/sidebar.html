@@ -16,7 +16,7 @@
 
 
                            <li><a href="{% url 'add_students' %}">Student Add</a></li>
-                           <li><a href="edit-student.html">Student Edit</a></li>
+                           <li><a href="{% url 'hod_student_view' %}">Student View</a></li>
                         </ul>
                      </li>
                      <li class="submenu">
@@ -31,9 +31,10 @@
                      <li class="submenu">
                         <a href="#"><i class="fas fa-book-open"></i></i><span> Course</span> <span class="menu-arrow"></span></a>
                         <ul>
-                           <li><a href="departments.html">Course View</a></li>
-                           <li><a href="add-department.html">Course Add</a></li>
-                           <li><a href="edit-department.html">Course Edit</a></li>
+
+                           <li><a href="{% url 'add_course' %}">Course Add</a></li>
+                           <li><a href="{% url 'view_course' %}">Course Add</a></li>
+
                         </ul>
                      </li>
                      <li class="submenu">
