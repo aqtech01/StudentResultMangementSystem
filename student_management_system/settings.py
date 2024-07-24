@@ -41,7 +41,7 @@ INSTALLED_APPS = [
 ]
 EXTERNAL_APPS = [
     "core",
-    "active_link"
+
 ]
 INSTALLED_APPS += EXTERNAL_APPS
 

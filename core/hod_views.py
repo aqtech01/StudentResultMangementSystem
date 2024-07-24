@@ -3,7 +3,7 @@ from django.db import transaction
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from core.models import Course, SessionYear, CustomUser, Student, Staff, Subject
+from core.models import Course, SessionYear, CustomUser, Student, Staff, Subject, StaffNotification
 
 
 @login_required(login_url="/")
@@ -15,18 +15,17 @@ def hod_home(request):
     student_gender_male = Student.objects.filter(gender="Male").count()
     student_gender_female = Student.objects.filter(gender="Female").count()
 
-
     context = {
-        "student_count" : student_count,
-        "staff_count" : staff_count,
-        "course_count" :course_count,
-        "subject_count" : subject_count,
-        "student_gender_male" : student_gender_male,
+        "student_count": student_count,
+        "staff_count": staff_count,
+        "course_count": course_count,
+        "subject_count": subject_count,
+        "student_gender_male": student_gender_male,
         "student_gender_female": student_gender_female,
-        "title":"Home",
+        "title": "Home",
 
     }
-    return render(request, "hod/home.html",context)
+    return render(request, "hod/home.html", context)
 
 
 @login_required(login_url="/")
@@ -461,4 +460,21 @@ def delete_session_year(request, id):
     session.delete()
     messages.success(request, "Staff was successfully deleted!")
     return redirect("view_session_year")
+
+
+def save_staff_notification(request):
+    if request.method == "POST":
+        staff_id = request.POST.get("staff_id")
+        message = request.POST.get("message")
+        staff = Staff.objects.get(admin=staff_id)
+
+        notification = StaffNotification(
+            staff_id = staff,
+
+            message=message
+        )
+        notification.save()
+        messages.success(request,"Notification send Successfully")
+        return redirect("staff_send_notification")
+
 

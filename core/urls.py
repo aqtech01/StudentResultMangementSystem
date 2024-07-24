@@ -48,6 +48,9 @@ urlpatterns = [
 
     # This is Staff Urls
 
-    path("staff/home/", staff_home, name="staff_home")
+    path("staff/home/", staff_home, name="staff_home"),
+    path("hod/staff_notification",staff_send_notification, name="staff_send_notification"),
+    path("hod/staff/save_notification", save_staff_notification, name="save_staff_notification"),
+    path("hod/staff/notification", staff_view_notification, name="staff_view_notification"),
 
 ]

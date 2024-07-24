@@ -15,5 +15,6 @@ admin.site.register(SessionYear)
 admin.site.register(Student)
 admin.site.register(Staff)
 admin.site.register(Subject)
+admin.site.register(StaffNotification)
 
 
