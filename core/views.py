@@ -34,7 +34,7 @@ def doLogin(request):
             if user_type == CustomUser.HOD:
                 return redirect("hod_home")  # Replace with your actual URL name
             elif user_type == CustomUser.STAFF:
-                return HttpResponse("STAFF")  # Replace with your actual URL name
+                return redirect("staff_home")  # Replace with your actual URL name
             elif user_type == CustomUser.STUDENT:
                 return HttpResponse("Student")
         else:

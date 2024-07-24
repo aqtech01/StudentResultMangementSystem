@@ -1,4 +1,5 @@
 from core.hod_views import *
+from core.staff_views import *
 from core.views import *
 from django.urls import path
 
@@ -43,5 +44,10 @@ urlpatterns = [
     path('hod/view/', view_session_year, name='view_session_year'),
     path('hod/update/<int:id>/', update_session_year, name='update_session_year'),
     path('hod/delete/<int:id>/', delete_session_year, name='delete_session_year'),
+
+
+    # This is Staff Urls
+
+    path("staff/home/", staff_home, name="staff_home")
 
 ]
