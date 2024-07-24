@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from core.models import *
 
 
@@ -18,5 +18,21 @@ def staff_send_notification(request):
 
 
 def staff_view_notification(request):
-    
-    return render(request, "staff/notification.html")
+    staff = Staff.objects.filter(admin = request.user.id)
+    for i in staff:
+        staff_id = i.id
+
+        notification = StaffNotification.objects.filter(staff_id = staff_id)
+
+        context = {
+            "notification" : notification,
+            "Title": "View Notification",
+        }
+    return render(request, "staff/notification.html",context)
+
+
+def mark_done(request,status):
+    notification = StaffNotification.objects.get(id=status)
+    notification.status = 1
+    notification.save()
+    return redirect("staff_view_notification")

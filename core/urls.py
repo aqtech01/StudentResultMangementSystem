@@ -52,5 +52,6 @@ urlpatterns = [
     path("hod/staff_notification",staff_send_notification, name="staff_send_notification"),
     path("hod/staff/save_notification", save_staff_notification, name="save_staff_notification"),
     path("hod/staff/notification", staff_view_notification, name="staff_view_notification"),
+    path("staff/mark_done/notification<str:status>", mark_done, name="mark_done"),
 
 ]

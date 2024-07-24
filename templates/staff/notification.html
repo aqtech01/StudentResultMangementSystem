@@ -28,25 +28,18 @@
                                     </tr>
                                  </thead>
                                  <tbody>
-                                 {% for course in courses %}
+                                 {% for i in notification %}
                                     <tr>
-                                       <td>{{course.id}}</td>
+                                       <td>{{i.message}}</td>
                                        <td>
-                                          <h2 class="table-avatar">
-                                           <a href="student-details.html">{{ course.name }}</a>
-                                          </h2>
+                                           {% if i.status == 0 %}
+                                           <a href="{% url 'mark_done' status=i.id %}" type="submit" class="btn btn-danger">Mark as Done</a>
+                                       {% else %}
+                                           <button type="submit" class="btn btn-danger" disabled>Done</button>
+                                                     {% endif %}
                                        </td>
 
-                                       <td class="text-right">
-                                          <div class="actions">
-                                             <a href="{% url 'edit_course' course.id %}" class="btn btn-sm bg-success-light mr-2">
-                                             <i class="fas fa-pen"></i>
-                                             </a>
-                                             <a href="{% url 'delete_course' course.id %}" class="btn btn-sm bg-danger-light">
-                                             <i class="fas fa-trash"></i>
-                                             </a>
-                                          </div>
-                                       </td>
+
                                     </tr>
 {% endfor %}
 
