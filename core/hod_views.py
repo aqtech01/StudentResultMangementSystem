@@ -478,3 +478,5 @@ def save_staff_notification(request):
         return redirect("staff_send_notification")
 
 
+def staff_leave_view(request):
+    return render(request, "hod/staff_leave.html")

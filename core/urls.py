@@ -31,6 +31,7 @@ urlpatterns = [
     path('hod/view_staff/', view_staff, name='view_staff'),
     path('edit_staff/<int:id>/', edit_staff, name='edit_staff'),
     path('delete_staff/<int:id>/', delete_course, name='delete_staff'),
+    path("hod/staff_leave/", staff_leave_view, name="staff_leave_view"),
 
 
     # Subjects
@@ -53,5 +54,7 @@ urlpatterns = [
     path("hod/staff/save_notification", save_staff_notification, name="save_staff_notification"),
     path("hod/staff/notification", staff_view_notification, name="staff_view_notification"),
     path("staff/mark_done/notification<str:status>", mark_done, name="mark_done"),
+    path("staff/apply_leave/", staff_apply_leave, name="staff_apply_leave"),
+    path("staff/apply_leave/save",staff_leave_save,name="staff_leave_save"),
 
 ]
