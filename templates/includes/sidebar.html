@@ -54,13 +54,13 @@
                     <a href="{% url 'staff_send_notification' %}"><i class="fas fa-bell"></i><span> Send Staff Notification</span> </a>
                 </li>
                 <li>
-                    <a href="#"><i class="fas fa-bell"></i><span> Send Student Notification</span> </a>
+                    <a href="{% url 'student_send_notification' %}"><i class="fas fa-bell"></i><span> Send Student Notification</span> </a>
                 </li>
                 <li>
                     <a href="{% url 'hod_staff_feedback_reply' %}"><i class="fas fa-comments"></i><span> Staff Feedback</span> </a>
                 </li>
                 <li>
-                    <a href="#"><i class="fas fa-comments"></i> <span> Student Feedback</span> </a>
+                    <a href="{% url 'student_feedback_reply' %}"><i class="fas fa-comments"></i> <span> Student Feedback</span> </a>
                 </li>
                 <li>
                     <a href="{% url 'staff_leave_view' %}"><i class="fas fa-scroll"></i> <span> Staff Leave</span> </a>
@@ -122,10 +122,10 @@
                     <a href="{% url 'hod_home' %}"><i class="fas fa-pray"></i><span> Apply for Leave</span> </a>
                 </li>
                   <li>
-                    <a href="{% url 'hod_home' %}"><i class="fas fa-comment"></i><span> Send Feedback</span> </a>
+                    <a href="{% url 'student_feedback' %}"><i class="fas fa-comment"></i><span> Send Feedback</span> </a>
                 </li>
                   <li>
-                    <a href="{% url 'hod_home' %}"><i class="fas fa-bell"></i><span> Send Notification</span> </a>
+                    <a href="{% url 'student_notification' %}"><i class="fas fa-bell"></i><span> Send Notification</span> </a>
                 </li>
                    <li>
                     <a href="{% url 'hod_home' %}"><i class="fas fa-sign-out-alt"></i><span> Logout</span> </a>

@@ -3,7 +3,8 @@ from django.db import transaction
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from core.models import Course, SessionYear, CustomUser, Student, Staff, Subject, StaffNotification, StaffLeave, StaffFeedBack
+from core.models import Course, SessionYear, CustomUser, Student, Staff, Subject, StaffNotification, StaffLeave, \
+    StaffFeedBack, StudentNotification, StudentFeedBack
 
 
 @login_required(login_url="/")
@@ -469,34 +470,34 @@ def save_staff_notification(request):
         staff = Staff.objects.get(admin=staff_id)
 
         notification = StaffNotification(
-            staff_id = staff,
+            staff_id=staff,
 
             message=message
         )
         notification.save()
-        messages.success(request,"Notification send Successfully")
+        messages.success(request, "Notification send Successfully")
         return redirect("staff_send_notification")
 
 
 def staff_leave_view(request):
     staff_leave = StaffLeave.objects.all()
     context = {
-        "staff_leave":staff_leave,
-        "title":"Staff Leave",
+        "staff_leave": staff_leave,
+        "title": "Staff Leave",
 
     }
-    return render(request, "hod/staff_leave.html",context)
+    return render(request, "hod/staff_leave.html", context)
 
 
-def staff_leave_disapprove(request,id):
-        leave = StaffLeave.objects.get(id = id)
-        leave.status = 2
-        leave.save()
+def staff_leave_disapprove(request, id):
+    leave = StaffLeave.objects.get(id=id)
+    leave.status = 2
+    leave.save()
 
-        return redirect("staff_leave_view")
+    return redirect("staff_leave_view")
 
 
-def staff_leave_approve(request,id):
+def staff_leave_approve(request, id):
     leave = StaffLeave.objects.get(id=id)
     leave.status = 1
     leave.save()
@@ -505,11 +506,11 @@ def staff_leave_approve(request,id):
 
 
 def staff_feedback_reply(request):
-    feedback=StaffFeedBack.objects.all()
+    feedback = StaffFeedBack.objects.all()
     context = {
-        "feedback" : feedback
+        "feedback": feedback
     }
-    return render(request, "hod/staff_feedback.html",context)
+    return render(request, "hod/staff_feedback.html", context)
 
 
 def staff_feedback_reply_save(request):
@@ -521,3 +522,47 @@ def staff_feedback_reply_save(request):
         feedback.save()
         messages.success(request, "Reply sent successfully")
         return redirect("hod_staff_feedback_reply")
+
+
+def student_send_notification(request):
+    student = Student.objects.all()
+    notification = StudentNotification.objects.all()
+    context = {
+        "student": student,
+        "title": "Student Notification",
+        "notification":notification,
+    }
+    return render(request, "student/send_student_notification.html", context)
+
+
+def student_send_notification_save(request):
+    if request.method == "POST":
+        message = request.POST.get("message")
+        student_id = request.POST.get("student_id")
+        student = Student.objects.get(admin=student_id)
+        new_notification = StudentNotification(
+            message=message,
+            student_id=student
+        )
+        new_notification.save()
+        messages.success(request, "Notification sent successfully")
+    return redirect("student_send_notification")
+
+
+def student_feedback_reply(request):
+    feedback = StudentFeedBack.objects.all()
+    context = {
+        "feedback": feedback
+    }
+    return render(request, "hod/student_feedback.html",context)
+
+
+def student_feedback_reply_save(request):
+    if request.method == "POST":
+        feedback_id = request.POST.get("feedback_id")
+        feed_back_reply = request.POST.get("feed_back_reply")  # Corrected field name
+        feedback = StudentFeedBack.objects.get(id=feedback_id)
+        feedback.feed_back_reply = feed_back_reply
+        feedback.save()
+        messages.success(request, "Reply sent successfully")
+        return redirect("student_feedback_reply")

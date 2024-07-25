@@ -17,6 +17,7 @@ admin.site.register(Staff)
 admin.site.register(Subject)
 admin.site.register(StaffNotification)
 admin.site.register(StaffLeave)
-admin.site.register(StaffFeedBack)
+admin.site.register(StudentNotification)
+admin.site.register(StudentFeedBack)
 
 

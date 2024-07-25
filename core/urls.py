@@ -37,6 +37,8 @@ urlpatterns = [
     path("hod/staff_leave/approve/<str:id>", staff_leave_disapprove, name="staff_leave_disapprove"),
     path("hod_staffeed_back/", staff_feedback_reply, name="hod_staff_feedback_reply"),
     path("hod_staffeed_back/save", staff_feedback_reply_save, name="hod_staff_feedback_reply_save"),
+    path("hod_student_feed_back/", student_feedback_reply, name="student_feedback_reply"),
+    path("hod_student_feed_back/save/", student_feedback_reply_save, name="student_feedback_reply_save"),
 
     # Subjects
     path("hod/add/subject/", add_subject, name="add_subject"),
@@ -50,23 +52,26 @@ urlpatterns = [
     path('hod/update/<int:id>/', update_session_year, name='update_session_year'),
     path('hod/delete/<int:id>/', delete_session_year, name='delete_session_year'),
 
-
     # This is Staff Urls
 
     path("staff/home/", staff_home, name="staff_home"),
-    path("hod/staff_notification",staff_send_notification, name="staff_send_notification"),
+    path("hod/staff_notification", staff_send_notification, name="staff_send_notification"),
     path("hod/staff/save_notification", save_staff_notification, name="save_staff_notification"),
     path("hod/staff/notification", staff_view_notification, name="staff_view_notification"),
     path("staff/mark_done/notification<str:status>", mark_done, name="mark_done"),
     path("staff/apply_leave/", staff_apply_leave, name="staff_apply_leave"),
-    path("staff/apply_leave/save",staff_leave_save,name="staff_leave_save"),
-    path("staff/feeback/", staff_feedback, name="staff_feedback"),
-    path("staff/feeback/save/", staff_feedback_save, name="staff_feedback_save"),
-
-
+    path("staff/apply_leave/save", staff_leave_save, name="staff_leave_save"),
+    path("staff/feedback/", staff_feedback, name="staff_feedback"),
+    path("staff/feedback/save/", staff_feedback_save, name="staff_feedback_save"),
 
     # StudentURL
 
-    path("student/home", student_home,name="student_home")
+    path("student/home", student_home, name="student_home"),
+    path('send-notification/', student_send_notification, name='student_send_notification'),
+    path('send-notification/save', student_send_notification_save, name='student_send_notification_save'),
+    path("student/notification/", student_notification, name="student_notification"),
+    path('notifications/mark-done/<int:notification_id>/', mark_done, name='mark_done'),
+    path("student/feedback",student_feedback,name="student_feedback"),
+    path("student/feedback/save", student_feedback_save, name="student_feedback_save")
 
 ]

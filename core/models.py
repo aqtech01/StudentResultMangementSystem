@@ -106,3 +106,24 @@ class StaffFeedBack(models.Model):
     def __str__(self):
         return self.staff_id.admin.first_name
 
+
+class StudentNotification(models.Model):
+    student_id = models.ForeignKey(Student, on_delete=models.CASCADE)
+    message = models.TextField()
+    status = models.IntegerField(null=True, default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.student_id.admin.first_name
+
+
+class StudentFeedBack(models.Model):
+    student_id = models.ForeignKey(Student, on_delete=models.CASCADE)
+    feed_back = models.TextField()
+    feed_back_reply = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.student_id.admin.first_name
