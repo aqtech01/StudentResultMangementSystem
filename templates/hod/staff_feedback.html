@@ -6,13 +6,13 @@
         <div class="col">
             <h3 class="page-title">Send Staff Notification</h3>
             <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{% url 'home' %}">Courses</a></li>
-                <li class="breadcrumb-item active">Send Staff Notification</li>
+                <li class="breadcrumb-item"><a href="{% url 'home' %}">Dashboard</a></li>
+                <li class="breadcrumb-item active">Staff Feedback</li>
             </ul>
         </div>
         <div class="col-auto text-right float-right ml-auto">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#viewAllNotificationsModal">
-                View All Notifications
+                View All Staff Feedback
             </button>
         </div>
     </div>
@@ -28,35 +28,35 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Name</th>
-                                <th>User Name</th>
-                                <th>Email</th>
+                                <th>Staff Name</th>
+                                <th>Feedback</th>
+                                <th>Date</th>
                                 <th class="text-right">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for staf in staff %}
+                            {% for feedback in feedback %}
                             <tr>
-                                <td>{{ staf.id }}</td>
+                                <td>{{ feedback.id }}</td>
                                 <td>
                                     <h2 class="table-avatar">
-                                        {% if staf.admin.profile_pic %}
+                                        {% if feedback.staff_id.admin.profile_pic %}
                                         <a href="" class="avatar avatar-sm mr-2">
-                                            <img class="avatar-img rounded-circle" src="{{ staf.admin.profile_pic.url }}" alt="User Image">
+                                            <img class="avatar-img rounded-circle" src="{{ feedback.staff_id.admin.profile_pic.url }}" alt="User Image">
                                         </a>
                                         {% else %}
                                         <a href="staff-details.html" class="avatar avatar-sm mr-2">
                                             <img class="avatar-img rounded-circle" src="path/to/default-avatar.png" alt="Default Avatar">
                                         </a>
                                         {% endif %}
-                                        <a href="staff-details.html">{{ staf.admin.first_name|slice:":1" }}.{{ staf.admin.last_name }}</a>
+                                        <a href="staff-details.html">{{ feedback.staff_id.admin.first_name|slice:":1" }}.{{ feedback.staff_id.admin.last_name }}</a>
                                     </h2>
                                 </td>
-                                <td>{{ staf.admin.username }}</td>
-                                <td>{{ staf.admin.email }}</td>
+                                <td>{{ feedback.feed_back }}</td>
+                                <td>{{ feedback.created_at }}</td>
                                 <td class="text-right">
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#sendNotificationModal-{{ forloop.counter }}">
-                                        Send Notification
+                                        Reply
                                     </button>
                                 </td>
                             </tr>
@@ -89,8 +89,8 @@
                                     <table id="notification_table" class="table table-hover table-center mb-0">
                                         <thead>
                                             <tr>
-                                                <th style="width:60%">Message</th>
-                                                <th style="width:30%">Status</th>
+                                                <th style="width:60%">Feedback</th>
+                                                <th style="width:30%">Reply</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -119,26 +119,27 @@
 </div>
 
 <!-- Send Notification Modals -->
-{% for staf in staff %}
+{% for feedback in feedback %}
 <div class="modal fade" id="sendNotificationModal-{{ forloop.counter }}" tabindex="-1" role="dialog" aria-labelledby="sendNotificationModalLabel-{{ forloop.counter }}" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="sendNotificationModalLabel-{{ forloop.counter }}">Send Notification to {{ staf.admin.first_name|slice:":1" }}.{{ staf.admin.last_name }}</h5>
+                <h5 class="modal-title" id="sendNotificationModalLabel-{{ forloop.counter }}">Reply  to {{ staf.admin.first_name|slice:":1" }}.{{ staf.admin.last_name }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{% url 'save_staff_notification' %}" method="POST">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <label for="notificationMessage-{{ forloop.counter }}">Message</label>
-                        <input type="text" class="form-control" id="notificationMessage-{{ forloop.counter }}" name="message" required>
-                    </div>
-                    <input type="hidden" name="staff_id" value="{{ staf.admin.id }}">
-                    <button type="submit" class="btn btn-primary">Send Notification</button>
-                </form>
+                <form action="{% url 'hod_staff_feedback_reply_save' %}" method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="feedbackReply-{{ forloop.counter }}">Feedback Reply</label>
+        <textarea class="form-control" id="feedbackReply-{{ forloop.counter }}" name="feed_back_reply" required></textarea>
+    </div>
+    <input type="hidden" name="feedback_id" value="{{ feedback.id }}">
+    <button type="submit" class="btn btn-primary">Send Reply</button>
+</form>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

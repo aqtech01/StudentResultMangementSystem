@@ -57,7 +57,7 @@
                     <a href="#"><i class="fas fa-bell"></i><span> Send Student Notification</span> </a>
                 </li>
                 <li>
-                    <a href="#"><i class="fas fa-comments"></i><span> Staff Feedback</span> </a>
+                    <a href="{% url 'hod_staff_feedback_reply' %}"><i class="fas fa-comments"></i><span> Staff Feedback</span> </a>
                 </li>
                 <li>
                     <a href="#"><i class="fas fa-comments"></i> <span> Student Feedback</span> </a>
@@ -93,7 +93,7 @@
                     <a href="{% url 'staff_apply_leave' %}"><i class="fas fa-envelope-open"></i><span> Apply For Leave</span> </a>
                 </li>
                  <li>
-                    <a href="{% url 'hod_home' %}"><i class="fas fa-comment"></i><span> Send FeedBack</span> </a>
+                    <a href="{% url 'staff_feedback' %}"><i class="fas fa-comment"></i><span> Send FeedBack</span> </a>
                 </li>
                 <li>
                     <a href="{% url 'staff_view_notification' %}"><i class="fas fa-bell"></i><span> Notification</span> </a>
@@ -105,7 +105,32 @@
 
             </ul>
             {% else %}
-            This is Student Panel
+             <ul>
+                <li class="menu-title">
+                    <span>Main Menu</span>
+                </li>
+                <li>
+                    <a href="{% url 'student_home' %}"><i class="fas fa-tachometer-alt"></i><span> Dashboard</span> </a>
+                </li>
+                  <li>
+                    <a href="{% url 'hod_home' %}"><i class="fas fa-calendar-alt"></i><span> View Attendance</span> </a>
+                </li>
+                  <li>
+                    <a href="{% url 'hod_home' %}"><i class="fas fa-poll"></i><span> View Result</span> </a>
+                </li>
+                  <li>
+                    <a href="{% url 'hod_home' %}"><i class="fas fa-pray"></i><span> Apply for Leave</span> </a>
+                </li>
+                  <li>
+                    <a href="{% url 'hod_home' %}"><i class="fas fa-comment"></i><span> Send Feedback</span> </a>
+                </li>
+                  <li>
+                    <a href="{% url 'hod_home' %}"><i class="fas fa-bell"></i><span> Send Notification</span> </a>
+                </li>
+                   <li>
+                    <a href="{% url 'hod_home' %}"><i class="fas fa-sign-out-alt"></i><span> Logout</span> </a>
+                </li>
+             </ul>
             {% endif %}
         </div>
     </div>

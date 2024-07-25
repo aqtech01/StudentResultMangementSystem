@@ -1,6 +1,7 @@
 from core.hod_views import *
 from core.staff_views import *
 from core.views import *
+from core.student_views import *
 from django.urls import path
 
 urlpatterns = [
@@ -32,7 +33,10 @@ urlpatterns = [
     path('edit_staff/<int:id>/', edit_staff, name='edit_staff'),
     path('delete_staff/<int:id>/', delete_course, name='delete_staff'),
     path("hod/staff_leave/", staff_leave_view, name="staff_leave_view"),
-
+    path("hod/staff_leave/approve/<str:id>", staff_leave_approve, name="staff_leave_approve"),
+    path("hod/staff_leave/approve/<str:id>", staff_leave_disapprove, name="staff_leave_disapprove"),
+    path("hod_staffeed_back/", staff_feedback_reply, name="hod_staff_feedback_reply"),
+    path("hod_staffeed_back/save", staff_feedback_reply_save, name="hod_staff_feedback_reply_save"),
 
     # Subjects
     path("hod/add/subject/", add_subject, name="add_subject"),
@@ -56,5 +60,13 @@ urlpatterns = [
     path("staff/mark_done/notification<str:status>", mark_done, name="mark_done"),
     path("staff/apply_leave/", staff_apply_leave, name="staff_apply_leave"),
     path("staff/apply_leave/save",staff_leave_save,name="staff_leave_save"),
+    path("staff/feeback/", staff_feedback, name="staff_feedback"),
+    path("staff/feeback/save/", staff_feedback_save, name="staff_feedback_save"),
+
+
+
+    # StudentURL
+
+    path("student/home", student_home,name="student_home")
 
 ]

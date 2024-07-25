@@ -70,30 +70,31 @@
                                  <thead>
 
                                     <tr>
-                                       <th>ID</th>
-                                       <th>Name</th>
-                                       <th class="text-right">Action</th>
+                                       <th>Date</th>
+                                       <th>Reason</th>
+                                       <th class="text-right">Status</th>
                                     </tr>
                                  </thead>
                                  <tbody>
-                                 {% for course in courses %}
+                                 {% for history in staff_leave_history %}
                                     <tr>
-                                       <td>{{course.id}}</td>
+                                       <td>{{history.date}}</td>
                                        <td>
                                           <h2 class="table-avatar">
-                                           <a href="student-details.html">{{ course.name }}</a>
+                                           <a href="">{{ history.message }}</a>
                                           </h2>
                                        </td>
 
                                        <td class="text-right">
                                           <div class="actions">
-                                             <a href="{% url 'edit_course' course.id %}" class="btn btn-sm bg-success-light mr-2">
-                                             <i class="fas fa-pen"></i>
-                                             </a>
-                                             <a href="{% url 'delete_course' course.id %}" class="btn btn-sm bg-danger-light">
-                                             <i class="fas fa-trash"></i>
-                                             </a>
-                                          </div>
+                                              {% if history.status == 0 %}
+                                              <span class="badge badge-info">Pending</span>
+                                              {% elif history.status == 1 %}
+                                              <span class="badge badge-success">Accepted</span>
+                                              {% else %}
+                                              <span class="badge danger">Rejected</span>
+                                              {% endif %}
+                                                        </div>
                                        </td>
                                     </tr>
 {% endfor %}

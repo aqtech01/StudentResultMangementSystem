@@ -36,7 +36,7 @@ def doLogin(request):
             elif user_type == CustomUser.STAFF:
                 return redirect("staff_home")  # Replace with your actual URL name
             elif user_type == CustomUser.STUDENT:
-                return HttpResponse("Student")
+                return redirect("student_home")
         else:
             messages.error(request, "Invalid email or password")
             return redirect('login')
