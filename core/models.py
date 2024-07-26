@@ -38,19 +38,6 @@ class SessionYear(models.Model):
         return f"{self.session_start} - {self.session_end} "
 
 
-class Student(models.Model):
-    admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE, null=True, blank=True)
-    address = models.TextField()
-    gender = models.CharField(max_length=100)
-    course_id = models.ForeignKey(Course, on_delete=models.DO_NOTHING)
-    session_year_id = models.ForeignKey(SessionYear, on_delete=models.DO_NOTHING)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"{self.admin.first_name} - {self.admin.last_name} "
-
-
 class Staff(models.Model):
     admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE, null=True, blank=True)
     address = models.TextField()
@@ -109,6 +96,16 @@ class StaffFeedBack(models.Model):
         return self.staff_id.admin.first_name
 
 
+class Student(models.Model):
+    admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE, null=True, blank=True)
+    address = models.TextField()
+    gender = models.CharField(max_length=100)
+    course_id = models.ForeignKey(Course, on_delete=models.DO_NOTHING)
+    session_year_id = models.ForeignKey(SessionYear, on_delete=models.DO_NOTHING)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
+
+
 class StudentNotification(models.Model):
     student_id = models.ForeignKey(Student, on_delete=models.CASCADE)
     message = models.TextField()
@@ -133,12 +130,33 @@ class StudentFeedBack(models.Model):
 
 
 class StudentLeave(models.Model):
-    student_id = models.ForeignKey(Student, on_delete=models.CASCADE)
-    date = models.CharField(max_length=100)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    date = models.CharField(max_length=100)  # Consider using DateField
     message = models.TextField()
     status = models.IntegerField(null=True, default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
+        return self.student.admin.first_name
+
+
+class Attendance(models.Model):
+    subject_id = models.ForeignKey(Subject,on_delete=models.DO_NOTHING)
+    attendance_date = models.DateField()
+    session_year_id = models.ForeignKey(SessionYear,on_delete=models.DO_NOTHING)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.subject_id.name
+
+
+class AttendanceReport(models.Model):
+    student_id = models.ForeignKey(Student, on_delete=models.DO_NOTHING)
+    attendance_id = models.ForeignKey(Attendance,on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    def __str__(self):
         return self.student_id.admin.first_name
+

@@ -53,55 +53,56 @@
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-          <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Leave Apply History</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        </div>
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Leave Apply History</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
             <div class="modal-body">
-        <div class="row">
-                  <div class="col-sm-12">
-                     <div class="card card-table">
-                        <div class="card-body">
-                           <div class="table-responsive">
-                              <table id="table_id" class="table table-hover table-center mb-0 ">
-                                 <thead>
-                                    <tr>
-                                       <th>Date</th>
-                                       <th>Reason</th>
-                                       <th class="text-right">Status</th>
-                                    </tr>
-                                 </thead>
-                                 <tbody>
-                                 {% for history in student_leave_history %}
-                                    <tr>
-                                       <td>{{ history.date }}</td>
-                                       <td>{{ history.message }}</td>
-                                       <td class="text-right">
-                                          <div class="actions">
-                                              {% if history.status == 0 %}
-                                              <span class="badge badge-info">Pending</span>
-                                              {% elif history.status == 1 %}
-                                              <span class="badge badge-success">Accepted</span>
-                                              {% else %}
-                                              <span class="badge badge-danger">Rejected</span>
-                                              {% endif %}
-                                          </div>
-                                       </td>
-                                    </tr>
-                                 {% endfor %}
-                                 </tbody>
-                              </table>
-                           </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card card-table">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="table_id" class="table table-hover table-center mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Reason</th>
+                                                <th class="text-right">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for history in student_leave_history %}
+                                            <tr>
+                                                <td>{{ history.date }}</td>
+                                                <td>{{ history.message }}</td>
+                                                <td class="text-right">
+                                                    <div class="actions">
+                                                        {% if history.status == 0 %}
+                                                        <span class="badge badge-info">Pending</span>
+                                                        {% elif history.status == 1 %}
+                                                        <span class="badge badge-success">Accepted</span>
+                                                        {% else %}
+                                                        <span class="badge badge-danger">Rejected</span>
+                                                        {% endif %}
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
-                     </div>
-                  </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-    </div>
 {% endblock main %}

@@ -65,6 +65,9 @@ urlpatterns = [
     path("staff/apply_leave/save", staff_leave_save, name="staff_leave_save"),
     path("staff/feedback/", staff_feedback, name="staff_feedback"),
     path("staff/feedback/save/", staff_feedback_save, name="staff_feedback_save"),
+    path("staff/take/attendance/", staff_take_attendance, name="staff_take_attendance"),
+    path("staff/save/attendance/", staff_save_attendance, name="staff_save_attendance"),
+    path("staff/view/attendance/", staff_view_attendance, name="staff_view_attendance"),
 
     # StudentURL
 

@@ -66,7 +66,7 @@
                     <a href="{% url 'staff_leave_view' %}"><i class="fas fa-scroll"></i> <span> Staff Leave</span> </a>
                 </li>
                 <li>
-                    <a href="{% url 'staff_leave_view' %}"><i class="fas fa-scroll"></i> <span> Student Leave</span> </a>
+                    <a href="{% url 'student_leave_view' %}"><i class="fas fa-scroll"></i> <span> Student Leave</span> </a>
                 </li>
                 <li>
                     <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i><span> Logout</span> </a>
@@ -81,10 +81,10 @@
                     <a href="{% url 'hod_home' %}"><i class="fas fa-tachometer-alt"></i><span> Dashboard</span> </a>
                 </li>
                  <li>
-                    <a href="{% url 'hod_home' %}"><i class="fas fa-calendar-alt"></i><span> Total Attendence</span> </a>
+                    <a href="{% url 'staff_take_attendance' %}"><i class="fas fa-calendar-alt"></i><span> Take Attendence</span> </a>
                 </li>
                  <li>
-                    <a href="{% url 'hod_home' %}"><i class="fas fa-calendar-alt"></i><span> View/Update Attendence</span> </a>
+                    <a href="{% url 'staff_view_attendance' %}"><i class="fas fa-calendar-alt"></i><span> View/Update Attendence</span> </a>
                 </li>
                  <li>
                     <a href="{% url 'hod_home' %}"><i class="fas fa-poll-h"></i><span> Add Result</span> </a>

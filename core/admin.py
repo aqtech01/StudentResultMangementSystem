@@ -20,5 +20,8 @@ admin.site.register(StaffLeave)
 admin.site.register(StudentNotification)
 admin.site.register(StudentFeedBack)
 admin.site.register(StudentLeave)
+admin.site.register(Attendance)
+admin.site.register(AttendanceReport)
+
 
 

@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from core.models import *
 
@@ -59,23 +59,25 @@ def student_feedback_save(request):
         messages.success(request, "feedback sent successfully")
         return redirect("student_feedback")
 
+
 @login_required
 def student_apply_leave(request):
-    student_id = Student.objects.get(admin=request.user.id)
-    student_leave_history = StudentLeave.objects.filter(student_id=student_id)
+    student = get_object_or_404(Student, admin=request.user.id)
+    student_leave_history = StudentLeave.objects.filter(student=student)
     context = {
-        "student_leave_history": student_leave_history
+        "student_leave_history": student_leave_history,
     }
     return render(request, "student/apply_leave.html", context)
+
 
 @login_required
 def student_leave_save(request):
     if request.method == "POST":
         date = request.POST.get("date")
         message = request.POST.get("message")
-        student = Student.objects.get(admin=request.user.id)
+        student = get_object_or_404(Student, admin=request.user.id)
         leave = StudentLeave(
-            student_id=student.id,
+            student=student,  # Assign the student instance directly
             date=date,
             message=message
         )
