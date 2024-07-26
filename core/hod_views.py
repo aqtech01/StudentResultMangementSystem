@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from core.models import Course, SessionYear, CustomUser, Student, Staff, Subject, StaffNotification, StaffLeave, \
-    StaffFeedBack, StudentNotification, StudentFeedBack
+    StaffFeedBack, StudentNotification, StudentFeedBack, StudentLeave
 
 
 @login_required(login_url="/")
@@ -519,6 +519,7 @@ def staff_feedback_reply_save(request):
         feed_back_reply = request.POST.get("feed_back_reply")  # Corrected field name
         feedback = StaffFeedBack.objects.get(id=feedback_id)
         feedback.feed_back_reply = feed_back_reply
+        feedback.status = 1
         feedback.save()
         messages.success(request, "Reply sent successfully")
         return redirect("hod_staff_feedback_reply")
@@ -530,7 +531,7 @@ def student_send_notification(request):
     context = {
         "student": student,
         "title": "Student Notification",
-        "notification":notification,
+        "notification": notification,
     }
     return render(request, "student/send_student_notification.html", context)
 
@@ -551,10 +552,11 @@ def student_send_notification_save(request):
 
 def student_feedback_reply(request):
     feedback = StudentFeedBack.objects.all()
+    feedback_history = StudentFeedBack.objects.all().order_by('-id')[0:5]
     context = {
         "feedback": feedback
     }
-    return render(request, "hod/student_feedback.html",context)
+    return render(request, "hod/student_feedback.html", context)
 
 
 def student_feedback_reply_save(request):
@@ -563,6 +565,31 @@ def student_feedback_reply_save(request):
         feed_back_reply = request.POST.get("feed_back_reply")  # Corrected field name
         feedback = StudentFeedBack.objects.get(id=feedback_id)
         feedback.feed_back_reply = feed_back_reply
+        feedback.status = 1
         feedback.save()
         messages.success(request, "Reply sent successfully")
         return redirect("student_feedback_reply")
+
+
+@login_required
+def student_leave_view(request):
+    student_leave = StudentLeave.objects.all()
+    context = {
+        "student_leave": student_leave,
+        "title": "Student Leave",
+    }
+    return render(request, "hod/student_leave.html", context)
+
+@login_required
+def student_leave_disapprove(request, id):
+    leave = StudentLeave.objects.get(id=id)
+    leave.status = 2
+    leave.save()
+    return redirect("student_leave_view")
+
+@login_required
+def student_leave_approve(request, id):
+    leave = StudentLeave.objects.get(id=id)
+    leave.status = 1
+    leave.save()
+    return redirect("student_leave_view")

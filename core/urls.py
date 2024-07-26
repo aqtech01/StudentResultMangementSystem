@@ -39,7 +39,9 @@ urlpatterns = [
     path("hod_staffeed_back/save", staff_feedback_reply_save, name="hod_staff_feedback_reply_save"),
     path("hod_student_feed_back/", student_feedback_reply, name="student_feedback_reply"),
     path("hod_student_feed_back/save/", student_feedback_reply_save, name="student_feedback_reply_save"),
-
+    path("hod/student_leave/", student_leave_view, name="student_leave_view"),
+    path("hod/student_leave/approve/<int:id>/", student_leave_approve, name="student_leave_approve"),
+    path("hod/student_leave/disapprove/<int:id>/", student_leave_disapprove, name="student_leave_disapprove"),
     # Subjects
     path("hod/add/subject/", add_subject, name="add_subject"),
     path('hod/view_subject/', view_subject, name='view_subject'),
@@ -72,6 +74,7 @@ urlpatterns = [
     path("student/notification/", student_notification, name="student_notification"),
     path('notifications/mark-done/<int:notification_id>/', mark_done, name='mark_done'),
     path("student/feedback",student_feedback,name="student_feedback"),
-    path("student/feedback/save", student_feedback_save, name="student_feedback_save")
-
+    path("student/feedback/save", student_feedback_save, name="student_feedback_save"),
+    path("student/apply_leave/", student_apply_leave, name="student_apply_leave"),
+    path("student/apply_leave/save/", student_leave_save, name="student_leave_save"),
 ]

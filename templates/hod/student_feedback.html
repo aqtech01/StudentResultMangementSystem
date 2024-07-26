@@ -94,11 +94,11 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for notification in see_notification %}
+                                            {% for feedback in feedback %}
                                             <tr>
-                                                <td>{{ notification.message }}</td>
+                                                <td>{{ feedback.feed_back }}</td>
                                                 <td>
-                                                    {% if notification.status == 0 %}
+                                                    {% if feedback.status == 0 %}
                                                     <span class="badge badge-danger">Unread</span>
                                                     {% else %}
                                                     <span class="badge badge-success">Read</span>
